@@ -18,6 +18,7 @@ export default defineConfig([
 
     rules: {
       'no-useless-constructor': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
     },
   },
   globalIgnores(['dist/', 'node_modules/', 'data/']),
