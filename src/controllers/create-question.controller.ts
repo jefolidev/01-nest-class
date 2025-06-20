@@ -1,5 +1,7 @@
-import { Body, Controller, Post, UseGuards, UsePipes } from '@nestjs/common'
+import { Controller, Post, UseGuards, UsePipes } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
+import { CurrentUser } from 'src/auth/current-user-decorator'
+import type { TokenSchema } from 'src/auth/jwt.strategy'
 import { ZodValidationPipe } from 'src/pipes/zod-validation.pipe'
 import { z } from 'zod'
 
@@ -18,7 +20,7 @@ export class CreateQuestionController {
 
   @Post()
   @UsePipes(new ZodValidationPipe(createQuestionRequestBodySchema))
-  async handle(@Body() body: CreateQuestionRequestBodySchema) {
+  async handle(@CurrentUser() user: TokenSchema) {
     return 'ok'
   }
 }
