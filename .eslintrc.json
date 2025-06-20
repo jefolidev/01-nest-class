@@ -1,8 +1,7 @@
 {
   "extends": "@rocketseat/eslint-config/node",
   "rules": {
-    "no-useless-constructor": "off",
-    "comma-dangle": "off",
-    "@typescript-eslint/comma-dangle": "off"
+    "no-useless-constructor": "off"
   }
+  
 }
