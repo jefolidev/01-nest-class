@@ -1,7 +1,6 @@
 import { Entity } from '@/core/entities/entity'
 import type { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import type { Optional } from '@/types/optional'
-
+import type { Optional } from '@/core/types/optional'
 export interface NotificationProps {
   recipientId: UniqueEntityID
   title: string
