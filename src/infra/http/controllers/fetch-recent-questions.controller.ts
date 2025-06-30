@@ -3,6 +3,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation.pipe'
 import { Controller, Get, Query, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { z } from 'zod'
+import { QuestionPresenter } from '../presenters/question-presenter'
 
 const pageQueryParamSchema = z
   .string()
@@ -22,10 +23,14 @@ export class FetchRecentQuestionsController {
 
   @Get()
   async handle(@Query('page', queryValidationPipe) page: PageQueryParamScham) {
-    const questions = await this.fetchRecentQuestions.execute({
+    const result = await this.fetchRecentQuestions.execute({
       page,
     })
 
-    return { questions }
+    if (result.isLeft()) throw new Error()
+
+    const questions = result.value.questions
+
+    return { questions: questions.map(QuestionPresenter.toHTTP) }
   }
 }
