@@ -25,8 +25,9 @@ export class AuthenticateStudentUseCase {
   }: AuthenticateStudentUseCaseRequest): Promise<AuthenticateStudentUseCaseResponse> {
     const student = await this.studentsRepository.findByEmail(email)
 
-    if (!student)
+    if (!student) {
       return left(new WrongCredentialsError())
+    }
 
     const isPasswordValid = await this.hashCompare.compare(password, student.password)
 
