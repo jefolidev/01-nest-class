@@ -5,11 +5,11 @@ import { HashCompare } from '../cryptography/hash-compare'
 import { StudentsRepository } from '../repositories/students-repository'
 import { WrongCredentialsError } from './errors/wrong-credentials-error'
 
-interface RegisterStudentUseCaseRequest {
+interface AuthenticateStudentUseCaseRequest {
   email: string
   password: string
 }
-type RegisterStudentUseCaseResponse = Either<
+type AuthenticateStudentUseCaseResponse = Either<
   WrongCredentialsError,
   {
     accessToken: string
@@ -17,18 +17,18 @@ type RegisterStudentUseCaseResponse = Either<
 >
 
 @Injectable()
-export class RegisterStudentUseCase {
-  constructor(private studentsRepository: StudentsRepository, private hashGenerator: HashCompare, private encrypter: Encrypter) { }
+export class AuthenticateStudentUseCase {
+  constructor(private studentsRepository: StudentsRepository, private hashCompare: HashCompare, private encrypter: Encrypter) { }
 
   async execute({
     email, password
-  }: RegisterStudentUseCaseRequest): Promise<RegisterStudentUseCaseResponse> {
+  }: AuthenticateStudentUseCaseRequest): Promise<AuthenticateStudentUseCaseResponse> {
     const student = await this.studentsRepository.findByEmail(email)
 
     if (!student)
       return left(new WrongCredentialsError())
 
-    const isPasswordValid = await this.hashGenerator.compare(password, student.password)
+    const isPasswordValid = await this.hashCompare.compare(password, student.password)
 
     if (!isPasswordValid)
       return left(new WrongCredentialsError())
