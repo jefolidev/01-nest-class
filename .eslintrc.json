@@ -4,6 +4,16 @@
     "no-useless-constructor": "off",
     "no-unused-vars": "warn",
     "no-new": "off",
-    "no-use-before-define": "off"
+    "no-use-before-define": "off",
+    "semi": "off",
+    "prettier/prettier": [
+      "off",
+      {
+        "semi": false,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "endOfLine": "auto"
+      }
+    ]
   }
 }
